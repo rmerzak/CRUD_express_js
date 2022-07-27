@@ -54,4 +54,61 @@ router.get('/searchById', function(req, res, next) {
       res.send({status:200, students: reponse});
   });
 });
+
+router.put('/update', function(req, res, next) {
+  const Name = req.query.firstName;
+  StudentModel.update({age: 22},{firstName: Name},function(err, reponse){
+    if (err)
+      res.send(err);
+    else
+      res.send({status:200, students: reponse});
+  });
+});
+
+router.put('/updateUser', function(req, res, next) {
+  const ID = req.query.id;
+  const Age = req.query.age;
+  StudentModel.findByIdAndUpdate(ID,{age: Age},function(err, reponse){
+    if (err)
+      res.send(err);
+    else
+      res.send({status:200, students: reponse});
+  });
+});
+
+/*
+  update-> it will update all matching documents based on query
+  findByIdAndUpdate-> it will single matching document and update it
+  findOneAndUpdate-> it will match the first document and update
+
+  model.ubdate({query}, {updateData}, function(err, response))
+*/
+router.put('/updateOneUser', function(req, res, next) {
+  const ID = req.query.id;
+  const Age = req.query.age;
+  StudentModel.findOneAndUpdate(ID,{age: Age},function(err, reponse){
+    if (err)
+      res.send(err);
+    else
+      res.send({status:200, students: reponse});
+  });
+});
+
+router.delete('/deleteUser', function(req, res, next) {
+  const ID = req.query.id;
+  StudentModel.findByIdAndRemove(ID, function(err, reponse){
+    if (err)
+      res.send(err);
+    else
+      res.send({status:200, students: reponse});
+  });
+});
+
+/*
+  Remove
+  findByIdAndRemove
+  deleteOne
+  findByIdAndDelete
+  findOneAndRemove
+*/
 module.exports = router;
